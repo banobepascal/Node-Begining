@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const config = require('config');
 const morgan = require('morgan');
 const helmet = require('helmet');
 const logger = require('./logger');
@@ -6,8 +7,9 @@ const auth = require('./auth');
 const express = require('express');
 const app = new express();
 
-// console.log(`NODE_ENV: ${process.env.NODE_ENV}`);
-// console.log(`app: ${app.get('env')}`);
+// configuration
+console.log('Application Name: ' + config.get('name'));
+console.log('Mail server: ' + config.get('mail.host'));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
