@@ -43,13 +43,10 @@ app.put('/api/courses/:id', (req, res) => {
     if (!course) res.status(404).send('The course with this ID not found.');
    
     // validate
-    const schema = {
-        name: Joi.string().min(3).required(),
-    }; 
-
-    const result = Joi.validate(req.body, schema);
-    if (result.error){
-        res.status(400).send(result.error.details[0].message);
+    const result = validateCourse(req.body);
+    const { error } = validateCourse(req.body);
+    if (error){
+        res.status(400).send(error.details[0].message);
         return;
     };
 
@@ -65,6 +62,15 @@ app.get('/api/courses/:id', (req, res) => {
     if (!course) res.status(404).send('The course with this ID not found.');
     res.send(course); 
 });
+
+function validateCourse(course) {
+     // validate
+     const schema = {
+        name: Joi.string().min(3).required(),
+    }; 
+
+    return Joi.validate(course, schema);
+}
 
 
 const port = process.env.PORT || 3000
