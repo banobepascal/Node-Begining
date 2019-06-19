@@ -2,9 +2,10 @@ const Joi = require('joi');
 const config = require('config');
 const morgan = require('morgan');
 const helmet = require('helmet');
-const people = require('./people')
-const logger = require('./logger');
-const auth = require('./auth');
+const people = require('./routes/people');
+const home = require('./routes/home');
+const logger = require('./middleware/logger');
+const auth = require('./middleware/auth');
 const express = require('express');
 const app = new express();
 
@@ -15,7 +16,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(helmet());
-app.use('/hey/people', people)
+app.use('/hey/people', people);
+app.use('/', home);
 
 // configuration
 console.log('Application Name: ' + config.get('name'));
@@ -29,12 +31,6 @@ if (app.get('env') === 'development') {
 // creating custom middleware
 app.use(logger);
 app.use(auth);
-
-
-app.get('/', (req, res) => {
-    res.render('index', { title: 'My Express App', message: 'Hello'});
-});
-
 
 
 const port = process.env.PORT || 3000;
