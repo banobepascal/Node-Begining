@@ -1,4 +1,4 @@
-
+const Joi = require('joi');
 const express = require('express');
 const app = new express();
 
@@ -22,6 +22,14 @@ app.get('/hey/people/:id', (req, res) => {
 });
 
 app.post('/hey/people', (req, res) => {
+
+    // validate
+    const { error } = validatePerson(req.body.name);
+    if (error) {
+        res.status(400).send(error.details[0].message);
+        return;
+    }
+
     const person = {
         id: people.length,
         name: req.body.name,
@@ -31,6 +39,15 @@ app.post('/hey/people', (req, res) => {
     res.send(person);
     
 });
+
+function validatePerson(person) {
+    // schema
+    const schema = {
+        name: Joi.string().min(3).required()
+    };
+
+    return Joi.validate(person, schema);
+}
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Lisenting on port ${port}..`));
