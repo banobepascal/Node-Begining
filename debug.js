@@ -1,6 +1,6 @@
 
-const startupDebugger = require('debug') ('app:startup');
-const dbDebugger = require('debug') ('app:db');
+const startupDebugger = require('debug')('app:startup');
+const dbDebugger = require('debug')('app:db');
 const morgan = require('morgan');
 const express = require('express');
 const app = new express();
