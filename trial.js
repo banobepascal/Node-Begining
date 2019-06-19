@@ -1,4 +1,6 @@
 const Joi = require('joi');
+const morgan = require('morgan');
+const helmet = require('helmet');
 const logger = require('./logger');
 const auth = require('./auth');
 const express = require('express');
@@ -7,11 +9,12 @@ const app = new express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use(helmet());
+app.use(morgan('tiny'));
 
 
 // creating custom middleware
 app.use(logger);
-
 app.use(auth);
 
 const people = [
