@@ -16,7 +16,7 @@ app.get('/', (req, res) => {
 
 app.get('/hey/people/:id', (req, res) => {
     const person = people.find(p =>  p.id === parseInt(req.params.id));
-    if (!person) res.status(400).send('not available.');
+    if (!person) return res.status(400).send('not available.');
 
     res.send(person);
 });
@@ -25,23 +25,47 @@ app.post('/hey/people', (req, res) => {
 
     // validate
     const { error } = validatePerson(req.body);
-    if (error) {
-        res.status(400).send(error.details[0].message);
-        return;
-    }
+    if (error) return res.status(400).send(error.details[0].message);
 
     const person = {
-        id: people.length,
+        id: people.length + 1,
         name: req.body.name,
     };
 
     people.push(person);
-    res.send(person);
+    res.send(person); 
     
 });
 
+app.put('/hey/people/:id', (req, res) => {
+   // lookup person
+   const person = people.find(p => p.id === parseInt(req.params.id));
+   if (!person) return res.status(400).send('Person doesnt exist.');
+   
+   // validate
+   const { error } = validatePerson(req.body);
+   if (error) return res.status(400).send(error.details[0].message);
+
+   // publish  person
+  person.name = req.body.name;
+  // return person
+   res.send(person);
+});
+
+app.delete('/hey/people/:id', (req, res) => {
+    // look up
+    const person = people.find(p => p.id === parseInt(req.params.id));
+    if (!person) return res.status(404).send('Person doesnt exist.');
+
+    // delete
+    const index = people.indexOf(person);
+    people.splice(index, 1);
+
+    res.send(person);
+});
+
 function validatePerson(person) {
-    // schema
+        // schema
     const schema = {
         name: Joi.string().min(3).required()
     };
