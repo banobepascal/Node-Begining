@@ -7,15 +7,17 @@ const auth = require('./auth');
 const express = require('express');
 const app = new express();
 
-// configuration
-console.log('Application Name: ' + config.get('name'));
-console.log('Mail server: ' + config.get('mail.host'));
+app.set('view engine', 'pug');
+app.set('views', './views');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 app.use(helmet());
 
+// configuration
+console.log('Application Name: ' + config.get('name'));
+console.log('Mail server: ' + config.get('mail.host'));
 
 if (app.get('env') === 'development') {
     app.use(morgan('tiny'));
@@ -33,7 +35,7 @@ const people = [
 ]
 
 app.get('/', (req, res) => {
-    res.send(people);
+    res.render('index', { title: 'My Express App', message: 'Hello'});
 });
 
 app.get('/hey/people/:id', (req, res) => {
