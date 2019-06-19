@@ -4,6 +4,9 @@ const app = new express();
 
 app.use(express.json());
 
+// creating custom middleware
+
+
 const people = [
     { id: 1, name: 'pascal'},
     { id: 2, name: 'bonny'},
