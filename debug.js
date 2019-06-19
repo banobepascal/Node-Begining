@@ -10,7 +10,8 @@ if (app.get('env') === 'development') {
     startupDebugger('Morgan enabled ...');
 }
 
-
+// Db work
+dbDebugger('conected to the database ....');
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));
