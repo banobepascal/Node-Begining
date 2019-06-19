@@ -1,11 +1,15 @@
 const Joi = require('joi');
+const logger = require('./logger');
+const auth = require('./auth');
 const express = require('express');
 const app = new express();
 
 app.use(express.json());
 
 // creating custom middleware
+app.use(logger);
 
+app.use(auth);
 
 const people = [
     { id: 1, name: 'pascal'},
