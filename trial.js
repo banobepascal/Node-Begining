@@ -2,6 +2,8 @@
 const express = require('express');
 const app = new express();
 
+app.use(express.json());
+
 const people = [
     { id: 1, name: 'pascal'},
     { id: 2, name: 'bonny'},
@@ -20,6 +22,13 @@ app.get('/hey/people/:id', (req, res) => {
 });
 
 app.post('/hey/people', (req, res) => {
+    const person = {
+        id: people.length,
+        name: req.body.name,
+    };
+
+    people.push(person);
+    res.send(person);
     
 });
 
