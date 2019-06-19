@@ -30,11 +30,6 @@ if (app.get('env') === 'development') {
 app.use(logger);
 app.use(auth);
 
-const people = [
-    { id: 1, name: 'pascal'},
-    { id: 2, name: 'bonny'},
-    { id: 3, name: 'francis'},
-]
 
 app.get('/', (req, res) => {
     res.render('index', { title: 'My Express App', message: 'Hello'});

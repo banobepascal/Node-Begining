@@ -1,6 +1,12 @@
 const express = require('express');
 const router = express.Router();
 
+const people = [
+    { id: 1, name: 'pascal'},
+    { id: 2, name: 'bonny'},
+    { id: 3, name: 'francis'},
+];
+
 router.get('/:id', (req, res) => {
     const person = people.find(p =>  p.id === parseInt(req.params.id));
     if (!person) return res.status(400).send('not available.');
