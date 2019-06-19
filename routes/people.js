@@ -7,6 +7,10 @@ const people = [
     { id: 3, name: 'francis'},
 ];
 
+router.get('/', (req, res) => {
+    res.send(people);
+});
+
 router.get('/:id', (req, res) => {
     const person = people.find(p =>  p.id === parseInt(req.params.id));
     if (!person) return res.status(400).send('not available.');
