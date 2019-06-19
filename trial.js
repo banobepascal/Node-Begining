@@ -24,7 +24,7 @@ app.get('/hey/people/:id', (req, res) => {
 app.post('/hey/people', (req, res) => {
 
     // validate
-    const { error } = validatePerson(req.body.name);
+    const { error } = validatePerson(req.body);
     if (error) {
         res.status(400).send(error.details[0].message);
         return;
