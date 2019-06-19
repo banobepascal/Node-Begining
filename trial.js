@@ -5,6 +5,8 @@ const express = require('express');
 const app = new express();
 
 app.use(express.json());
+app.use(express.urlencoded());
+
 
 // creating custom middleware
 app.use(logger);
